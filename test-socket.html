@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MultiMail Live Progress</title>
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 600px; margin: 40px auto; padding: 0 20px; }
+    #log { background: #f4f4f4; padding: 15px; border-radius: 8px; margin-top: 20px; }
+    .event { padding: 5px 0; border-bottom: 1px solid #ddd; }
+    .success { color: green; }
+    .complete { color: blue; font-weight: bold; }
+    .error { color: red; }
+    input { padding: 8px; width: 300px; margin-right: 8px; }
+    button { padding: 8px 16px; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <h2>MultiMail Live Progress</h2>
+
+  <div>
+    <input type="text" id="campaignId" placeholder="Paste campaign ID here" />
+    <button onclick="joinCampaign()">Watch Campaign</button>
+  </div>
+
+  <div id="log">
+    <p>Waiting for events...</p>
+  </div>
+
+  <script>
+    // Connect to your local server
+    const socket = io('http://localhost:3000')
+
+    socket.on('connect', () => {
+      log(`Connected to server — socket ID: ${socket.id}`, 'success')
+    })
+
+    socket.on('disconnect', () => {
+      log('Disconnected from server', 'error')
+    })
+
+    // Listen for progress events
+    // Server emits this after every single email
+    socket.on('campaignProgress', (data) => {
+      log(`Progress: ${data.sent} sent / ${data.failed} failed / ${data.total} total`, 'success')
+    })
+
+    // Listen for completion event
+    // Server emits this when all emails are processed
+    socket.on('campaignComplete', (data) => {
+      log(`COMPLETE: ${data.sent} sent / ${data.failed} failed / ${data.total} total`, 'complete')
+    })
+
+    function joinCampaign() {
+      const campaignId = document.getElementById('campaignId').value.trim()
+      if (!campaignId) return alert('Paste a campaign ID first')
+
+      // Tell server we want to watch this campaign
+      socket.emit('join', campaignId)
+      log(`Joined campaign room: ${campaignId}`, 'success')
+    }
+
+    function log(message, type = '') {
+      const div = document.getElementById('log')
+      const p = document.createElement('p')
+      p.className = `event ${type}`
+      p.textContent = `[${new Date().toLocaleTimeString()}] ${message}`
+      div.appendChild(p)
+    }
+  </script>
+</body>
+</html>
