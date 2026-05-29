@@ -2,6 +2,11 @@
 
 A production-grade backend API for sending bulk email campaigns with real-time tracking, scheduled dispatch, and live progress monitoring.
 
+## API Documentation
+
+Interactive Swagger docs available at:
+http://localhost:3000/api/docs
+
 ## Features
 
 - **Multi-tenant architecture** — isolated data per tenant with row-level security
