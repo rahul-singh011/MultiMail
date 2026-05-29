@@ -2,10 +2,10 @@
 
 A production-grade backend API for sending bulk email campaigns with real-time tracking, scheduled dispatch, and live progress monitoring.
 
-## API Documentation
+## Live Demo
 
-Interactive Swagger docs available at:
-http://localhost:3000/api/docs
+- **Swagger Docs:** https://multimail.onrender.com/api/docs
+- **Health Check:** https://multimail.onrender.com/health
 
 ## Features
 
