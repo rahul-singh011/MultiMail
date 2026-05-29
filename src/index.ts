@@ -11,6 +11,8 @@ import contactRoutes from './routes/contacts'
 import { startScheduler } from './jobs/scheduler'
 import { initSocket } from './socket'  
 import './queues/emailWorker'
+import swaggerUi from 'swagger-ui-express'
+import { swaggerSpec } from './config/swagger'
 
 
 const app = express()
@@ -23,6 +25,7 @@ app.use('/api/auth' , authRoutes)
 app.use('/api/campaigns' , campaignRoutes)
 app.use('/api/campaigns/:id/contacts', contactRoutes) 
 app.use('/api/track', trackingRoutes)
+app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec))
 
 app.get('/health' , (req,res)=>{
     res.json({status: 'ok' , env:env.NODE_ENV})
