@@ -12,12 +12,16 @@ export type EmailJobData = {
 };
 
 const emailQueue = new Bull<EmailJobData>("email-campaigns", {
-  redis: {
-    host: env.REDIS_HOST,
-    port: env.REDIS_PORT,
-  },
+  ...(process.env.REDIS_URL
+    ? { redis: process.env.REDIS_URL }
+    : {
+        redis: {
+          host: env.REDIS_HOST,
+          port: env.REDIS_PORT,
+        },
+      }),
 
-  defaultJobOption: {
+  defaultJobOptions: {
     attempts: 3,
 
     backoff: {

@@ -12,7 +12,7 @@ export const env = {
 
     REDIS_HOST: process.env.REDIS_HOST || '127.0.0.1',
     REDIS_PORT: parseInt(process.env.REDIS_PORT || '6379'),
-
+    REDIS_URL: process.env.REDIS_URL, 
     SMTP_HOST: process.env.SMTP_HOST,
     SMTP_PORT: parseInt(process.env.SMTP_PORT || '587'),
     SMTP_USER: process.env.SMTP_USER!,
