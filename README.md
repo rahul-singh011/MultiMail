@@ -7,7 +7,7 @@ A production-grade backend API for sending bulk email campaigns with real-time t
 - **Swagger Docs:** https://multimail.onrender.com/api/docs
 - **Health Check:** https://multimail.onrender.com/health
 
-## Features
+## Features 
 
 - **Multi-tenant architecture** — isolated data per tenant with row-level security
 - **Bulk email dispatch** — send to 50,000+ recipients via Bull Queue workers without blocking the API
